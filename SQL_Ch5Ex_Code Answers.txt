@@ -18,7 +18,7 @@ facilities in question. */
 
 SELECT `facid`, `name`, `membercost`, `monthlymaintenance` 
 FROM `Facilities` 
-WHERE (`membercost`/`monthlymaintenance`) *100 < 20
+WHERE (`membercost`/`monthlymaintenance`) *100 < 20b
 GROUP BY 1,2,3,4;
 
 /* Q4: How can you retrieve the details of facilities with ID 1 and 5?
@@ -71,9 +71,9 @@ SELECT CONCAT(B.`firstname`,' ', B.`surname`) AS MEMBER_NAME, C.`name`, (COUNT
 CASE WHEN A.`memid` = 0 THEN SUM(A.`slots`) * C.`guestcost` ELSE SUM(A.`slots`) * C.`membercost` END TOTAL_COST
 FROM 
 (SELECT * FROM `Bookings` WHERE DATE(`starttime`) = '2012-09-14' ) A
-INNER JOIN 
+LEFT OUTER JOIN 
 `Members` B ON A.`memid` = B.`memid`
-INNER JOIN 
+LEFT OUTER JOIN 
 `Facilities` C ON A.`facid` = C.`facid`b
 WHERE (CASE WHEN A.`memid` = 0 THEN SUM(A.`slots`) * C.`guestcost` ELSE SUM(A.`slots`) * C.`membercost` END) > 30
 GROUP BY CONCAT(B.`firstname`,' ', B.`surname`), C.`name`
